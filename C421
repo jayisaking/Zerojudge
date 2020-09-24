@@ -10,8 +10,8 @@ typedef struct Node
 };
 Node j[100001];
 int k=0;
-int ans1=0;
-int ans0=0;
+int ans1;
+int ans0;
 void test(int n)
 {
     if(j[n].h.empty())
@@ -58,22 +58,17 @@ int main()
         j[b].h.push_back(a);
 
     }
+    int ans=0;
     for(int i=1; i<=n; i++)
     {
         if(j[i].color==-1)
         {
-            if(ans0>=ans1)
-            {
-                j[i].color=0;
-                ans0++;
-                test(i);
-            }
-            else
-            {
-                j[i].color=1;
-                ans1++;
-                test(i);
-            }
+            ans1=0;
+            ans0=0;
+            j[i].color=1;
+            ans1++;
+            test(i);
+            ans+=min(ans1,ans0);
         }
         if(k==1)
         {
@@ -83,10 +78,7 @@ int main()
     }
     if(k==0)
     {
-        if(ans1>=ans0)
-            cout<<ans0<<endl;
-        else
-            cout<<ans1<<endl;
+        cout<<ans<<endl;
     }
 
 
