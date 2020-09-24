@@ -1,0 +1,93 @@
+#include<iostream>
+#include<cmath>
+#include<vector>
+using namespace std;
+
+typedef struct Node
+{
+    vector<int> h;
+    int color=-1;
+};
+Node j[100001];
+int k=0;
+int ans1=0;
+int ans0=0;
+void test(int n)
+{
+    if(j[n].h.empty())
+    {
+        return;
+    }
+    for(int i=0; i<j[n].h.size(); i++)
+    {
+        if(j[j[n].h[i]].color==j[n].color)
+        {
+            k=1;
+            return;
+        }
+        else if(j[j[n].h[i]].color==-1)
+        {
+            j[j[n].h[i]].color=!j[n].color;
+            if(j[n].color==1)
+            {
+                ans0++;
+            }
+            else
+            {
+                ans1++;
+            }
+            test(j[n].h[i]);
+        }
+        else
+        {
+            continue;
+        }
+    }
+}
+int main()
+{
+    int n,m;
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cin>>n>>m;
+    for(int i=0; i<m; i++)
+    {
+        int a,b;
+        cin>>a>>b;
+        j[a].h.push_back(b);
+        j[b].h.push_back(a);
+
+    }
+    for(int i=1; i<=n; i++)
+    {
+        if(j[i].color==-1)
+        {
+            if(ans0>=ans1)
+            {
+                j[i].color=0;
+                ans0++;
+                test(i);
+            }
+            else
+            {
+                j[i].color=1;
+                ans1++;
+                test(i);
+            }
+        }
+        if(k==1)
+        {
+            cout<<0<<endl;
+            break;
+        }
+    }
+    if(k==0)
+    {
+        if(ans1>=ans0)
+            cout<<ans0<<endl;
+        else
+            cout<<ans1<<endl;
+    }
+
+
+}
