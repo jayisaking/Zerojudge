@@ -1,0 +1,58 @@
+import java.util.Scanner;
+
+public class F257 {// AC
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner sc = new Scanner(System.in);
+		while (sc.hasNextLine()) {
+			String l = sc.nextLine();
+			int n = Integer.parseInt(l);
+			int[][] ans = new int[n][n];
+
+			int c = sc.nextInt();
+			sc.nextLine();
+			for (int i = 1; i <= c; i++) {
+				String s = sc.nextLine();
+				String[] s1 = s.split(" ");
+				int a = Integer.parseInt(s1[0]);
+				int b = Integer.parseInt(s1[1]);
+				if (ans[a][b] == -1) {
+					continue;
+				}
+				ans[a][b] = -1;
+				if (a > 0 && ans[a - 1][b] != -1) {
+					ans[a - 1][b]++;
+				}
+				if (a < n - 1 && ans[a + 1][b] != -1) {
+					ans[a + 1][b]++;
+				}
+				if (b > 0 && ans[a][b - 1] != -1) {
+					ans[a][b - 1]++;
+				}
+				if (b < n - 1 && ans[a][b + 1] != -1) {
+					ans[a][b + 1]++;
+				}
+
+				if (a > 0 && b > 0 && ans[a - 1][b - 1] != -1) {
+					ans[a - 1][b - 1]++;
+				}
+				if (a < n - 1 && b > 0 && ans[a + 1][b - 1] != -1) {
+					ans[a + 1][b - 1]++;
+				}
+				if (b < n - 1 && a > 0 && ans[a - 1][b + 1] != -1) {
+					ans[a - 1][b + 1]++;
+				}
+				if (a < n - 1 && b < n - 1 && ans[a + 1][b + 1] != -1) {
+					ans[a + 1][b + 1]++;
+				}
+			}
+			for (int i = 0; i < n; i++) {
+				for (int o = 0; o < n; o++) {
+					System.out.print(ans[o][i] == -1 ? "x" : ans[o][i]);
+				}
+				System.out.println();
+			}
+		}
+	}
+
+}
