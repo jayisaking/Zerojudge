@@ -1,0 +1,41 @@
+
+import java.util.Scanner;
+
+public class B898 {
+ public static String test(String a,String b) {//AC
+	 for(int i=0;i<a.length();i++) {
+		 if(a.charAt(i)>b.charAt(i)) {
+			 return a;
+		 }else if(b.charAt(i)>a.charAt(i)) {
+			 return b;
+		 }
+	 }
+	 return a;
+ }
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner sc = new Scanner(System.in);
+	    String sssss=sc.nextLine();
+	   for(int i=1;i<=5;i++) {
+		   String a=sc.nextLine();
+		   String [] b=a.split(" ");
+		   if(b[0].length()>b[1].length()&&b[0].length()>b[2].length()) {
+			   System.out.println(b[0]);
+		   }else if(b[2].length()>b[1].length()&&b[2].length()>b[0].length()) {
+			   System.out.println(b[2]);
+		   }else if(b[1].length()>b[0].length()&&b[1].length()>b[2].length()) {
+			   System.out.println(b[1]);
+		   }else if(b[1].length()<b[0].length()&&b[1].length()<b[2].length()) {
+			   System.out.println(test(b[0],b[2]));
+		   }else if(b[0].length()<b[1].length()&&b[0].length()<b[2].length()) {
+			   System.out.println(test(b[1],b[2]));
+		   }else if(b[2].length()<b[0].length()&&b[2].length()<b[1].length()) {
+			   System.out.println(test(b[1],b[0]));
+		   }else {
+			   System.out.println(test(b[0],test(b[1],b[2])));
+		   }
+	   }
+	}
+
+}
+
