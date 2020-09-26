@@ -1,0 +1,30 @@
+import java.math.BigInteger;
+import java.util.Scanner;
+
+public class B546 {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		while (sc.hasNextLine()) {
+			String s = sc.nextLine();
+			String[] s1 = s.split(" ");
+			int a = Integer.parseInt(s1[0]);
+			int n = Integer.parseInt(s1[1]);
+			BigInteger[] ans = new BigInteger[n + 1];
+			ans[1] = new BigInteger(a + "");
+			ans[2] = new BigInteger(a + "");
+			BigInteger an = new BigInteger("2");
+			BigInteger a1 = new BigInteger("1");
+			BigInteger a0 = new BigInteger("0");
+			for (int i = 3; i <= n; i++) {
+				if (ans[i - 1].mod(an).equals(a0)) {
+					ans[i] = new BigInteger(ans[i - 1].divide(an).toString());
+				} else {
+					ans[i] = new BigInteger(ans[i - 1].multiply(an).toString());
+				}
+				an = an.add(a1);
+			}
+			System.out.println(ans[n].toString());
+		}
+	}
+}
