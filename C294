@@ -1,0 +1,32 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+
+public class C294 {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		String s=sc.nextLine();
+		String []s1=s.split(" ");
+		ArrayList<Integer>an=new ArrayList<>();
+		for(int i=0;i<3;i++) {
+			an.add(Integer.parseInt(s1[i]));
+		}
+		Collections.sort(an);
+		int a=an.get(0);
+		int b=an.get(1);
+		int c=an.get(2);
+		System.out.println(a+" "+b+" "+c);
+       if(a+b<=c) {
+    	   System.out.println("No");
+       }else if(a*a+b*b==c*c){
+    	   System.out.println("Right");
+       }else if(a*a+b*b>c*c) {
+    	   System.out.println("Acute");
+       }else {
+    	   System.out.println("Obtuse");
+       }
+	
+	}
+}
+
