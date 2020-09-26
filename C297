@@ -1,0 +1,137 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+
+public class C297 {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		ArrayList<String> round1 = new ArrayList<>();
+		ArrayList<String> round2 = new ArrayList<>();
+		ArrayList<String> round3 = new ArrayList<>();
+		ArrayList<String> round4 = new ArrayList<>();
+		ArrayList<String> round5 = new ArrayList<>();
+		int rounds = 0;
+		for (int i = 0; i < 9; i++) {
+			String s = sc.nextLine();
+			String[] s1 = s.split(" ");
+			int a = Integer.parseInt(s1[0]);
+			rounds += a;
+			for (int o = 1; o <= a; o++) {
+				switch (o) {
+				case 1:
+					round1.add(s1[o]);
+					break;
+				case 2:
+					round2.add(s1[o]);
+					break;
+				case 3:
+					round3.add(s1[o]);
+					break;
+				case 4:
+					round4.add(s1[o]);
+					break;
+				case 5:
+					round5.add(s1[o]);
+					break;
+				}
+			}
+		}
+		int jj = sc.nextInt();
+		sc.nextLine();
+		int out = 0;
+		int r = 1;
+		int score = 0;
+		ArrayList<String> round = round1;
+		int finalout = 0;
+		int[] base = new int[4];
+		for (int i = 0; i < rounds; i++) {
+			switch (i / 9) {
+			case 1:
+				round = round2;
+				break;
+			case 2:
+				round = round3;
+				break;
+			case 3:
+				round = round4;
+				break;
+			case 4:
+				round = round5;
+				break;
+			}
+			if (round.get(i % 9).equals("1B")) {
+				if (base[3] == 1) {
+					score++;
+					base[3] = base[2];
+					base[2] = base[1];
+					base[1] = 1;
+				} else {
+					base[3] = base[2];
+					base[2] = base[1];
+					base[1] = 1;
+				}
+			} else if (round.get(i % 9).equals("2B")) {
+				if (base[3] == 1) {
+					score++;
+				}
+				if (base[2] == 1) {
+					score++;
+				}
+				base[3] = base[1];
+				base[2] = 1;
+				if (base[1] == 1) {
+					base[1] = 0;
+				}
+			} else if (round.get(i % 9).equals("3B")) {
+				if (base[3] == 1) {
+					score++;
+				}
+				if (base[2] == 1) {
+					score++;
+					base[2] = 0;
+				}
+				if (base[1] == 1) {
+					score++;
+					base[1] = 0;
+				}
+				base[3] = 1;
+
+			} else if (round.get(i % 9).equals("HR")) {
+				if (base[3] == 1) {
+					score++;
+					base[3] = 0;
+				}
+				if (base[2] == 1) {
+					score++;
+					base[2] = 0;
+				}
+				if (base[1] == 1) {
+					score++;
+					base[1] = 0;
+				}
+				score++;
+			} else if (round.get(i % 9).equals("FO") || round.get(i % 9).equals("GO")
+					|| round.get(i % 9).equals("SO")) {
+				if (out == 2) {
+					out = 0;
+					finalout++;
+					if (finalout == jj) {
+						break;
+					}
+					base[1] = 0;
+					base[2] = 0;
+					base[3] = 0;
+				} else {
+					out++;
+					finalout++;
+					if (finalout == jj) {
+						break;
+					}
+				}
+
+			}
+		}
+		System.out.println(score);
+	}
+}
