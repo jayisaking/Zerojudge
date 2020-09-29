@@ -1,0 +1,30 @@
+#include<iostream>
+#include<cmath>
+using namespace std;
+int main()
+{
+    int treasure[502]= {0};
+    int dp[502][2];
+    int n;
+    cin>>n;
+    for(int i=1; i<=n; i++)
+    {
+        int a;
+        cin>>a;
+        treasure[a]++;
+    }
+    for(int i=1; i<=500; i++)
+    {
+        treasure[i]=i*treasure[i];
+    }
+    dp[1][0]=0;
+    dp[1][1]=treasure[1];
+    for(int i=2; i<=501; i++)
+    {
+
+        dp[i][1]=dp[i-1][0]+treasure[i];
+        dp[i][0]=max(dp[i-1][1],dp[i-1][0]);
+
+    }
+    cout<<max(dp[501][0],dp[501][1])<<endl;
+}
