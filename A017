@@ -1,0 +1,163 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class A022 {
+	public static boolean test(String s) {
+		Pattern pat = Pattern.compile("[0-9]*");
+		Matcher match = pat.matcher(s);
+		return match.matches();
+	}
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		while (sc.hasNextLine()) {
+			String s = sc.nextLine();
+			if (s.equals("")) {
+				break;
+			}
+			ArrayList<String> original = new ArrayList<>();
+			ArrayList<String> result = new ArrayList<>();
+			ArrayList<String> temp = new ArrayList<>();
+			String[] s1 = s.split(" ");
+			for (int i = 0; i < s1.length; i++) {
+				original.add(s1[i]);
+			}
+			int t = original.size();
+			tape1: for (int h = 1; h <= t; h++) {
+				if (original.size() == 0) {
+					break;
+				}
+				if (test(original.get(0))) {
+					result.add(original.get(0));
+					original.remove(0);
+				} else if (temp.size() == 0) {
+					temp.add(original.get(0));
+					original.remove(0);
+					continue tape1;
+				} else if (original.get(0).equals("+") || original.get(0).equals("-")) {
+					int k = temp.size();
+					for (int i = k - 1; i >= 0; i--) {
+						if (temp.get(temp.size() - 1).equals("(") || temp.get(temp.size() - 1).equals(")")) {
+							temp.add(original.get(0));
+							original.remove(0);
+							continue tape1;
+						} else {
+							result.add(temp.get(temp.size() - 1));
+							temp.remove(temp.size() - 1);
+						}
+					}
+					if (temp.size() == 0) {
+						temp.add(original.get(0));
+						original.remove(0);
+						continue tape1;
+					}
+				} else if (original.get(0).equals("*") || original.get(0).equals("/")) {
+					int k = temp.size();
+					for (int i = k - 1; i >= 0; i--) {
+						if (temp.get(temp.size() - 1).equals("(") || temp.get(temp.size() - 1).equals(")")
+								|| temp.size() == 0 || temp.get(temp.size() - 1).equals("-")
+								|| temp.get(temp.size() - 1).equals("+")) {
+							temp.add(original.get(0));
+							original.remove(0);
+							break;
+						} else {
+							result.add(temp.get(temp.size() - 1));
+							temp.remove(temp.size() - 1);
+						}
+					}
+					if (temp.size() == 0) {
+						temp.add(original.get(0));
+						original.remove(0);
+						continue tape1;
+					}
+				} else if (original.get(0).equals("%")) {
+					int k = temp.size();
+					for (int i = k - 1; i >= 0; i--) {
+						if (temp.get(temp.size() - 1).equals("(") || temp.get(temp.size() - 1).equals(")")
+								|| temp.size() == 0 || temp.get(temp.size() - 1).equals("-")
+								|| temp.get(temp.size() - 1).equals("+") || temp.get(temp.size() - 1).equals("*")
+								|| temp.get(temp.size() - 1).equals("/")) {
+							temp.add(original.get(0));
+							original.remove(0);
+							break;
+						} else {
+							result.add(temp.get(temp.size() - 1));
+							temp.remove(temp.size() - 1);
+						}
+					}
+					if (temp.size() == 0) {
+						temp.add(original.get(0));
+						original.remove(0);
+						continue tape1;
+					}
+				} else if (original.get(0).equals("(")) {
+					temp.add(original.get(0));
+					original.remove(0);
+				} else if (original.get(0).equals(")")) {
+					original.remove(0);
+					int k = temp.size();
+					for (int i = k - 1; i >= 0; i--) {
+						if (temp.get(temp.size() - 1).equals("(")) {
+							temp.remove(temp.size() - 1);
+							break;
+						} else {
+							result.add(temp.get(temp.size() - 1));
+							temp.remove(temp.size() - 1);
+
+						}
+					}
+
+				}
+			}
+			int k = temp.size();
+			for (int i = k - 1; i >= 0; i--) {
+				result.add(temp.get(temp.size() - 1));
+				temp.remove(temp.size() - 1);
+			}
+//		System.out.println(result);
+			ArrayList<String> ans = new ArrayList<>();
+			int tt = result.size();
+			for (int i = 1; i <= tt; i++) {
+				if (test(result.get(0))) {
+					ans.add(result.get(0));
+					result.remove(0);
+				} else {
+					if (result.get(0).equals("+")) {
+						long h = Long.parseLong(ans.get(ans.size() - 2)) + Long.parseLong(ans.get(ans.size() - 1));
+						result.remove(0);
+						ans.remove(ans.size() - 1);
+						ans.remove(ans.size() - 1);
+						ans.add(h + "");
+					} else if (result.get(0).equals("-")) {
+						long h = Long.parseLong(ans.get(ans.size() - 2)) - Long.parseLong(ans.get(ans.size() - 1));
+						result.remove(0);
+						ans.remove(ans.size() - 1);
+						ans.remove(ans.size() - 1);
+						ans.add(h + "");
+					} else if (result.get(0).equals("*")) {
+						long h = Long.parseLong(ans.get(ans.size() - 2)) * Long.parseLong(ans.get(ans.size() - 1));
+						result.remove(0);
+						ans.remove(ans.size() - 1);
+						ans.remove(ans.size() - 1);
+						ans.add(h + "");
+					} else if (result.get(0).equals("/")) {
+						long h = Long.parseLong(ans.get(ans.size() - 2)) / Long.parseLong(ans.get(ans.size() - 1));
+						result.remove(0);
+						ans.remove(ans.size() - 1);
+						ans.remove(ans.size() - 1);
+						ans.add(h + "");
+					} else if (result.get(0).equals("%")) {
+						long h = Long.parseLong(ans.get(ans.size() - 2)) % Long.parseLong(ans.get(ans.size() - 1));
+						result.remove(0);
+						ans.remove(ans.size() - 1);
+						ans.remove(ans.size() - 1);
+						ans.add(h + "");
+					}
+				}
+			}
+			System.out.println(Long.parseLong(ans.get(0)));
+		}
+	}
+}
