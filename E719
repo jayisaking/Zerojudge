@@ -1,0 +1,52 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+using namespace std;
+struct Node
+{
+    long x;
+    long y;
+    Node(long a,long b)
+    {
+        x=a;
+        y=b;
+    }
+};
+bool cmp(Node f,Node h)
+{
+    if(f.x==h.x)
+    {
+        return f.y<h.y;
+    }
+    return f.x<h.x;
+}
+
+int main()
+{
+    int k,n;
+    cin>>k>>n;
+    vector<Node>node;
+    for(int i=1; i<=n; i++)
+    {
+        long x,y;
+        cin>>x>>y;
+        node.push_back(Node(x,y));
+    }
+    sort(node.begin(),node.end(),cmp);
+    int ans=0;
+    for(int i=0; i<n; i++)
+    {
+        for(int o=i+1; o<n; o++)
+        {
+            if(node[o].x>node[i].x+k)
+            {
+                break;
+            }
+            if(node[o].y>=node[i].y-k&&node[o].y<=node[i].y+k)
+            {
+                ans++;
+            }
+        }
+    }
+    cout<<ans<<endl;
+}
