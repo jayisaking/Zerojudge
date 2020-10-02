@@ -1,0 +1,64 @@
+#include<iostream>
+#include<vector>
+#include<cmath>
+using namespace std;
+vector<int>pri;
+bool cmp(int a)
+{
+    if(a==2)
+    {
+        return true;
+    }
+    if(a%2==0)
+    {
+        return false;
+    }
+    for(int i=0; i<pri.size(); i++)
+    {
+        if(pri[i]>sqrt(a))
+        {
+            break;
+        }
+        if(a%pri[i]==0)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+int main()
+{
+    pri.push_back(2);
+    for(int i=3; i<=46340; i++)
+    {
+        int k=1;
+        for(int o=0; o<pri.size(); o++)
+        {
+            if(i%pri[o]==0)
+            {
+                k=0;
+                break;
+            }
+        }
+        if(k==1)
+        {
+            pri.push_back(i);
+        }
+    }
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    int a;
+    while(cin>>a)
+    {
+        if(cmp(a))
+        {
+            cout<<"質數"<<endl;
+        }
+        else
+        {
+            cout<<"非質數"<<endl;
+        }
+    }
+}
