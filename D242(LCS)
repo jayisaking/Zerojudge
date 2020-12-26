@@ -1,0 +1,52 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+int main()//AC
+//1.vector lowerbound 用法 2.25行d.size(這裡多了一個加一) 3.44行x--沒放在那個if裡 4.zerojudge會自己告訴程式輸入已經停止 所以不用寫別的
+{
+    vector<int> a;
+    vector<int> b;
+    int num;
+    int n;
+    while(cin>>n)
+    {
+        a.push_back(n);
+    }
+    vector<int> d;
+    d.push_back(a[0]);
+    b.push_back(1);
+    for(int i=1; i<a.size(); i++)
+    {
+        if(a[i]>d[d.size()-1])
+        {
+            d.push_back(a[i]);
+            b.push_back(d.size());
+            continue;
+        }
+        vector<int>::iterator h=lower_bound(d.begin(),d.end(),a[i]);
+        int pos=h-d.begin();
+        b.push_back(pos+1);
+        d[pos]=a[i];
+    }
+    int x=d.size();
+    vector <int> ans;
+    for(int i=b.size()-1; i>=0; i--)
+    {
+        if(ans.size()==d.size())
+        {
+            break;
+        }
+        if(b[i]==x)
+        {
+            ans.push_back(a[i]);
+            x--;
+        }
+    }
+    cout<<d.size()<<endl;
+    cout<<"-"<<endl;
+    for(int i=ans.size()-1; i>=0; i--)
+    {
+        cout<<ans[i]<<endl;
+    }
+}
