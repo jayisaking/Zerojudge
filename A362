@@ -1,0 +1,51 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<math.h>
+using namespace std;
+struct node
+{
+    int index;
+    int height;
+    int weight;
+    node(int a,int b,int c)
+    {
+        index=a;
+        height=b;
+        weight=c;
+    }
+};
+bool sort1(node a,node b)
+{
+    if(a.height!=b.height)
+    {
+        return a.height<b.height;
+    }
+    else if(a.weight!=b.weight)
+    {
+        return a.weight<b.weight;
+    }
+    else
+    {
+        return a.index<b.index;
+    }
+}
+int main()
+{
+    int n,h,w;
+    cin>>n;
+    vector <node> Node;
+    for(int i=1; i<=n; i++)
+    {
+        cin>>h>>w;
+        Node.push_back(node(i,h,w));
+    }
+
+    sort(Node.begin(),Node.end(),sort1);
+    int ans=0;
+    for(int i=0; i<Node.size(); i++)
+    {
+        ans+=abs((Node[i].index-(i+1)));
+    }
+    cout<<ans<<endl;
+}
