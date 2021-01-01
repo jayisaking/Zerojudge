@@ -1,0 +1,20 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+    int t;
+    cin>>t;
+    for(int i=1; i<=t; i++)
+    {
+        long a,b,q;
+        cin>>a>>b>>q;
+        if((a*q)%10007==(b*q)%10007)
+        {
+            cout<<"SAFE"<<endl;
+        }
+        else
+        {
+            cout<<"BOOM"<<endl;
+        }
+    }
+}
