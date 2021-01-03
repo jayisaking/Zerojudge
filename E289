@@ -1,0 +1,57 @@
+#include<iostream>
+#include<map>
+#include<vector>
+#include<algorithm>
+using namespace std;
+void print(pair<string,int> p)
+{
+    cout<<p.first<<" ";
+}
+int main()
+{
+    cin.tie(0);
+    ios::sync_with_stdio(false);
+    int m,n;
+    string s;
+    cin>>m>>n;
+    int k=0;
+    int leng=0;
+    int ans=0;
+    vector<string> rope;
+    map<string,int> exist;
+    map<string,int>::iterator iter;
+    for(int i=0; i<n; i++)
+    {
+        cin>>s;
+        rope.push_back(s);
+        iter=exist.find(s);
+        if(iter==exist.end())
+        {
+            exist[s]=i;
+            leng++;
+            if(leng==m)
+            {
+                ans++;
+                leng--;
+                // for_each(exist.begin(),exist.end(),print);
+                // cout<<"i= "<<i<<endl;
+                exist.erase(rope[k]);
+                k++;
+            }
+        }
+        else
+        {
+            int b=k;
+            k=(iter->second)+1;
+            for(int l=b; l<k; l++)
+            {
+                exist.erase(rope[l]);
+            }
+            exist[s]=i;
+            leng=leng-(k-b)+1;
+        }
+
+    }
+    cout<<ans<<endl;
+
+}
