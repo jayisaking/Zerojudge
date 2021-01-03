@@ -1,0 +1,31 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+    cin.tie(0);
+    ios::sync_with_stdio(false);
+    int n;
+    cin>>n;
+    string s[10];
+    int good[10];
+    for(int i=1; i<=n; i++)
+    {
+        cout<<"Case #"<<i<<":"<<endl;
+        int ans=0;
+        for(int o=0; o<10; o++)
+        {
+            cin>>s[o]>>good[o];
+            if(good[o]>ans)
+            {
+                ans=good[o];
+            }
+        }
+        for(int o=0; o<10; o++)
+        {
+            if(good[o]==ans)
+            {
+                cout<<s[o]<<endl;
+            }
+        }
+    }
+}
