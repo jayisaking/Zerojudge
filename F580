@@ -1,0 +1,49 @@
+#include<iostream>
+using namespace std;
+struct node
+{
+    int right=2;
+    int fron=4;
+    int top=1;
+};
+int main()
+{
+    node cube[21];
+    node example;
+    int n,m;
+    cin>>n>>m;
+    for(int i=1; i<=m; i++)
+    {
+        int a,b;
+        cin>>a>>b;
+        if(a>0&&b>0)
+        {
+            example=cube[a];
+            cube[a]=cube[b];
+            cube[b]=example;
+        }
+        else if(b==-1)
+        {
+            int alter=cube[a].top;
+            cube[a].top=7-cube[a].fron;
+            cube[a].fron=alter;
+        }
+        else if(b==-2)
+        {
+            int alter2=cube[a].top;
+            cube[a].top=7-cube[a].right;
+            cube[a].right=alter2;
+        }
+    }
+    for(int i=1; i<=n; i++)
+    {
+        if(i==n)
+        {
+            cout<<cube[i].top<<endl;
+        }
+        else
+        {
+            cout<<cube[i].top<<" ";
+        }
+    }
+}
