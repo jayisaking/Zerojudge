@@ -1,0 +1,62 @@
+#include<iostream>
+#include<math.h>
+#include<vector>
+using namespace std;
+int n1,n2,a;
+int dp[101][101];
+vector<int> tower1;
+vector<int> tower2;
+int dynamic(int a1,int a2)
+{
+    if(a1<0||a2<0)
+    {
+        return 0;
+    }
+    if(dp[a1][a2]!=-1)
+    {
+        return dp[a1][a2];
+    }
+    if(tower1[a1]==tower2[a2])
+    {
+        dp[a1][a2]=dynamic(a1-1,a2-1)+1;
+    }
+    else
+    {
+        dp[a1][a2]=max(dynamic(a1-1,a2),dynamic(a1,a2-1));
+    }
+    return dp[a1][a2];
+}
+int main()
+{
+    int k=0;
+    while(cin>>n1>>n2)
+    {
+        k++;
+        tower1.clear();
+        tower2.clear();
+        if(n1==0&&n2==0)
+        {
+            break;
+        }
+        for(int i=1; i<=n1; i++)
+        {
+            cin>>a;
+            tower1.push_back(a);
+        }
+        for(int i=1; i<=n2; i++)
+        {
+            cin>>a;
+            tower2.push_back(a);
+
+        }
+        for(int i=0; i<=n1; i++)
+        {
+            for(int o=0; o<=n2; o++)
+            {
+                dp[i][o]=-1;
+            }
+        }
+        cout<<"Twin Towers #"<<k<<endl;
+        cout<<"Number of Tiles : "<<dynamic(n1-1,n2-1)<<"\n\n";
+    }
+}
