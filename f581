@@ -1,0 +1,41 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int n,m;
+    vector<int>room;
+    int total=0,k;
+    cin>>n>>m;
+    for(int i=1; i<=n; i++)
+    {
+        cin>>k;
+        total+=k;
+        room.push_back(total);
+    }
+    for(int i=0; i<n; i++)
+    {
+        room.push_back(room[i]+room[n-1]);
+    }
+    vector<int>key;
+    for(int i=1; i<=m; i++)
+    {
+        cin>>k;
+        key.push_back(k);
+    }
+    int position=0;
+    for(int e:key)
+    {
+        if(position==0)
+        {
+            auto it=lower_bound(room.begin(),room.end(),e);
+            position=(1+it-room.begin())%n;
+        }
+        else
+        {
+            auto it=lower_bound(room.begin(),room.end(),e+room[position-1]);
+            position=(1+it-room.begin())%n;
+        }
+    }
+    cout<<position;
+
+}
